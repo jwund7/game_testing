@@ -18,7 +18,7 @@ var ground_friction: float = 2.0
 # air movement variables
 var air_move_speed: float = 500.0
 var air_speed_cap: float = 0.5
-var air_accel: float = 800.0
+var air_accel: float = 700.0
 
 # jumping variables
 var jump_force: float = 4.2

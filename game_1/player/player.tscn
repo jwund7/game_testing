@@ -5,18 +5,20 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
+height = 1.84
 radius = 0.45
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_oul6g")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 0.92716277, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_kqu6x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_oul6g")
 
 [node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
 
 [node name="PlayerCam" type="Camera3D" parent="Head"]
