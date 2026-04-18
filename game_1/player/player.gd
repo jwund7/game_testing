@@ -5,6 +5,7 @@ class_name Player
 
 @onready var cam_mount: Node3D = $Head
 @onready var camera: Camera3D = $Head/PlayerCam
+@onready var grapple_controller: Node = $GrappleController
 
 const SENS: float = 0.35
 
@@ -82,7 +83,9 @@ func _air_physics(delta: float, direction: Vector3) -> void:
 		var accel_speed: float = air_accel * air_move_speed * delta
 		# ensure velocity is not increased beyond speed cap
 		accel_speed = min(accel_speed, add_speed)
-		self.velocity += accel_speed * direction
+		# only apply air physics if a grapple is not in progress
+		if not grapple_controller.is_launched:
+			self.velocity += accel_speed * direction
 
 func _physics_process(delta: float) -> void:
 	# movement
