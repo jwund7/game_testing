@@ -10,6 +10,7 @@ extends Node
 @onready var grapple_indicator: RichTextLabel = $"../GrappleIndicator"
 
 var target_point: Vector3
+var grapple_time: float
 
 func _physics_process(delta: float) -> void:
 	# display the grapple reticle if a grapple point is hovered
@@ -20,6 +21,7 @@ func _physics_process(delta: float) -> void:
 	
 	# attempt grappled launch when button is pressed
 	if Input.is_action_just_pressed("grapple"):
+		grapple_time = 0.0
 		launch()
 	if is_launched:
 		handle_grapple(delta)
@@ -53,8 +55,9 @@ func handle_grapple(delta):
 	else:
 		release()
 	
-	# set player velocity while grappling
-	player.velocity = grapple_force * delta
+	# set player velocity while grappling using linear interpolation for smoothing
+	grapple_time += delta
+	player.velocity = player.velocity.lerp(grapple_force * delta, 0.5*grapple_time)
 
 func update_rope():
 	# do not display rope if grappling is not occurring
