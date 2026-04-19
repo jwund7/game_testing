@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://crxfpa6j1rapc"]
+[gd_scene load_steps=5 format=3 uid="uid://crxfpa6j1rapc"]
+
+[ext_resource type="Script" uid="uid://cwgn0kjolnkhc" path="res://world/grapple_point.gd" id="1_ywwpa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4itmi"]
 albedo_color = Color(0.31777897, 0.7865651, 0.96164316, 1)
@@ -11,6 +13,7 @@ material = SubResource("StandardMaterial3D_4itmi")
 [node name="GrapplePoint" type="StaticBody3D"]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("1_ywwpa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_4itmi")

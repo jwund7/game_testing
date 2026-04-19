@@ -8,21 +8,26 @@ extends Node
 @onready var player: CharacterBody3D = $".."
 @onready var rope = $"../Head/PlayerCam/Rope"
 @onready var grapple_indicator: RichTextLabel = $"../GrappleIndicator"
+@onready var grapple_timeout: Timer = $GrappleTimeout
 
 var target_point: Vector3
 var grapple_time: float
 
+func _ready() -> void:
+	grapple_timeout.timeout.connect(release)
+
 func _physics_process(delta: float) -> void:
 	# display the grapple reticle if a grapple point is hovered
-	if ray.is_colliding() and ray.get_collider().name == "GrapplePoint":
+	if ray.is_colliding() and ray.get_collider() is GrapplePoint:
 		grapple_indicator.visible = true
 	else:
 		grapple_indicator.visible = false
 	
 	# attempt grappled launch when button is pressed
-	if Input.is_action_just_pressed("grapple"):
+	if Input.is_action_just_pressed("grapple") and not is_launched:
 		grapple_time = 0.0
 		launch()
+	# handle movement if launch has occurred
 	if is_launched:
 		handle_grapple(delta)
 	update_rope()
@@ -30,15 +35,16 @@ func _physics_process(delta: float) -> void:
 func launch():
 	var grapple_point = ray.get_collider()
 	# ensure aimed collider is a grapple point
-	if ray.is_colliding() and grapple_point.name == "GrapplePoint":
+	if ray.is_colliding() and grapple_point is GrapplePoint:
 		target_point = grapple_point.global_position
 		is_launched = true
 		# create a timeout to prevent getting stuck infinitely
-		get_tree().create_timer(1.5).timeout.connect(release)
+		grapple_timeout.start()
 
 func release():
 	# release grapple
 	is_launched = false
+	grapple_timeout.stop()
 
 func handle_grapple(delta):
 	# get grapple direction and distance
@@ -67,5 +73,5 @@ func update_rope():
 	rope.visible = true
 	var distance: float = player.global_position.distance_to(target_point)
 	rope.look_at(target_point)
-	# scale rope in z direction based on distance from grappled point
+	# scale rope in its z direction based on distance from grappled point
 	rope.scale = Vector3(1, 1, distance)

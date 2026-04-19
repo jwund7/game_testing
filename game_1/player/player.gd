@@ -29,9 +29,6 @@ var jump_buffer_time: float = 0.1
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-func _process(_delta: float) -> void:
-	pass
-
 func get_move_speed() -> float:
 	if Input.is_action_pressed("sprint"):
 		return sprint_speed
