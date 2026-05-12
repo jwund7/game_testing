@@ -7,12 +7,12 @@ extends Node
 var selected_ability: String
 
 # crouch ability variables
+@export var is_crouched: bool = false
 var base_crouch_cooldown: float = 1.5
 var crouch_cooldown: float = 0.0
 var base_height: float = 1.8
 var crouch_height: float = 0.4
 var crouch_time: float
-var is_crouched: bool = false
 
 func _ready() -> void:
 	# placeholder, could change when more abilities are added

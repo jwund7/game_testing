@@ -6,10 +6,12 @@ class_name Player
 @onready var cam_mount: Node3D = $Head
 @onready var camera: Camera3D = $Head/PlayerCam
 @onready var grapple_controller: Node = $GrappleController
+@onready var ability_controller: Node = $AbilityController
 
 const SENS: float = 0.35
 
 # ground movement variables
+var crouch_speed: float = 2.5
 var walk_speed: float = 3.5
 var sprint_speed: float = 4.5
 var ground_accel: float = 14.0
@@ -30,10 +32,15 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func get_move_speed() -> float:
-	if Input.is_action_pressed("sprint"):
-		return sprint_speed
+	# prevent sprinting and return crouch speed if player is using crouch ability
+	if ability_controller.is_crouched:
+		return crouch_speed
+	# otherwise, return speed based on if player is sprinting
 	else:
-		return walk_speed
+		if Input.is_action_pressed("sprint"):
+			return sprint_speed
+		else:
+			return walk_speed
 
 func jump() -> void:
 	# propel player upwards
@@ -89,11 +96,13 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (cam_mount.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
+		# always run ground physics if on floor
 		_ground_physics(delta, direction)
 		# if there is a jump buffered, jump
 		if jump_buffer == true:
 			jump()
 	else:
+		# always run air physics if not on floor
 		_air_physics(delta, direction)
 	
 	# jumping
