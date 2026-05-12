@@ -149,3 +149,24 @@ use_collision = true
 collision_layer = 2
 size = Vector3(0.03, 3.7, 2.5)
 material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="CrawlBlocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(1.9997559, 3, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(1.9997559, 3, 0.5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 2, 0.5)

@@ -1,13 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcqmasf81enlv"]
+[gd_scene load_steps=9 format=3 uid="uid://bcqmasf81enlv"]
 
 [ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://player/rope.tscn" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://0sus41liyryf" path="res://player/grapple_controller.gd" id="2_rkbax"]
 [ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://world/crosshair.png" id="4_yw30f"]
+[ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://player/ability_controller.gd" id="5_qjkh3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
+height = 1.8
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
+height = 1.8
+radius = 0.45
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qjkh3"]
 height = 1.84
 radius = 0.45
 
@@ -16,11 +22,15 @@ collision_mask = 2
 script = ExtResource("1_oul6g")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.92716277, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_kqu6x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_oul6g")
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_yw30f")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
@@ -41,11 +51,6 @@ script = ExtResource("2_rkbax")
 wait_time = 1.5
 one_shot = true
 
-[node name="Crosshair" type="Sprite2D" parent="."]
-position = Vector2(960, 540)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("4_yw30f")
-
 [node name="GrappleIndicator" type="RichTextLabel" parent="."]
 visible = false
 texture_filter = 1
@@ -58,3 +63,13 @@ rotation = -1.5707964
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
 text = "( )"
+
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("5_qjkh3")
+
+[node name="UncrouchCheck" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UncrouchCheck"]
+shape = SubResource("CylinderShape3D_qjkh3")
