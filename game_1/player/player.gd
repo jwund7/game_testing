@@ -95,15 +95,17 @@ func _physics_process(delta: float) -> void:
 	# movement
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (cam_mount.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if is_on_floor():
-		# always run ground physics if on floor
-		_ground_physics(delta, direction)
-		# if there is a jump buffered, jump
-		if jump_buffer == true:
-			jump()
-	else:
-		# always run air physics if not on floor
-		_air_physics(delta, direction)
+	# pause normal physics while dodge is occurring
+	if not ability_controller.is_dodging:
+		if is_on_floor():
+			# always run ground physics if on floor
+			_ground_physics(delta, direction)
+			# if there is a jump buffered, jump
+			if jump_buffer == true:
+				jump()
+		else:
+			# always run air physics if not on floor
+			_air_physics(delta, direction)
 	
 	# jumping
 	if Input.is_action_just_pressed("jump"):

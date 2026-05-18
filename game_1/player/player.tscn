@@ -36,6 +36,7 @@ texture = ExtResource("4_yw30f")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
 
 [node name="PlayerCam" type="Camera3D" parent="Head"]
+current = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/PlayerCam"]
 target_position = Vector3(0, 0, -10)
@@ -66,6 +67,9 @@ text = "( )"
 
 [node name="AbilityController" type="Node" parent="."]
 script = ExtResource("5_qjkh3")
+
+[node name="DodgeTime" type="Timer" parent="AbilityController"]
+wait_time = 0.2
 
 [node name="UncrouchCheck" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)
