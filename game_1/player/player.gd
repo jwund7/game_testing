@@ -11,7 +11,6 @@ class_name Player
 const SENS: float = 0.35
 
 # ground movement variables
-var crouch_speed: float = 2.5
 var walk_speed: float = 3.5
 var sprint_speed: float = 4.5
 var ground_accel: float = 14.0
@@ -28,13 +27,20 @@ var jump_force: float = 4.2
 var jump_buffer: bool = false
 var jump_buffer_time: float = 0.1
 
+# ability movement variables
+var crouch_speed: float = 2.5
+var levitate_speed: float = 2.5
+var levitate_accel: float = 2.5
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func get_move_speed() -> float:
-	# prevent sprinting and return crouch speed if player is using crouch ability
+	# prevent sprinting and return unique speed if player is using crouch or levitate ability
 	if ability_controller.is_crouched:
 		return crouch_speed
+	if ability_controller.is_levitating:
+		return levitate_speed
 	# otherwise, return speed based on if player is sprinting
 	else:
 		if Input.is_action_pressed("sprint"):
@@ -91,21 +97,39 @@ func _air_physics(delta: float, direction: Vector3) -> void:
 		if not grapple_controller.is_launched:
 			self.velocity += accel_speed * direction
 
+func _levitate_physics(delta: float, direction: Vector3) -> void:
+	# get the max speed as a vector
+	var max_speed: Vector3 = Vector3(get_move_speed(), 100.0, get_move_speed())
+	# add velocity based on direction
+	self.velocity += levitate_accel * direction * delta
+	# prevent velocity changes while grappling
+	if not grapple_controller.is_launched:
+		# slow down while no movement is occurring
+		if direction.length() == 0.0:
+			self.velocity -= self.velocity * delta
+		# clamp velocity to prevent going over max speed
+		self.velocity = self.velocity.clamp(-max_speed, max_speed)
+
 func _physics_process(delta: float) -> void:
 	# movement
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (cam_mount.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	# pause normal physics while dodge is occurring
-	if not ability_controller.is_dodging:
-		if is_on_floor():
-			# always run ground physics if on floor
-			_ground_physics(delta, direction)
-			# if there is a jump buffered, jump
-			if jump_buffer == true:
-				jump()
-		else:
-			# always run air physics if not on floor
-			_air_physics(delta, direction)
+	# avoid using other physics while levitating
+	if not ability_controller.is_levitating:
+		# pause normal physics while dodge is occurring
+		if not ability_controller.is_dodging:
+			if is_on_floor():
+				# always run ground physics if on floor
+				_ground_physics(delta, direction)
+				# if there is a jump buffered, jump
+				if jump_buffer == true:
+					jump()
+			else:
+				# always run air physics if not on floor
+				_air_physics(delta, direction)
+	else:
+		# use levitate physics while levitating
+		_levitate_physics(delta, direction)
 	
 	# jumping
 	if Input.is_action_just_pressed("jump"):

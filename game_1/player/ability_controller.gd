@@ -4,7 +4,7 @@ extends Node
 @onready var collision: CollisionShape3D = $"../CollisionShape3D"
 @onready var uncrouch_check: Area3D = $"../UncrouchCheck"
 @onready var dodge_timer: Timer = $DodgeTime
-
+@onready var levitate_timer: Timer = $LevitateTime
 
 var selected_ability: String
 
@@ -23,38 +23,38 @@ var dodge_cooldown: float = 0.0
 var dodge_time: float = 0.2
 var dodge_power: float = 20.0
 
+# levitate ability variables
+@export var is_levitating: bool = false
+var start_height: float
+var end_height: float
+var ascent_time: float = 1.0
+var levitate_height: float = 2.0
+var levitate_time: float = 10.0
+
 func _ready() -> void:
 	# placeholder, could change when more abilities are added
-	selected_ability = "dodge"
+	selected_ability = "levitate"
 	dodge_timer.timeout.connect(stop_dodge)
+	levitate_timer.timeout.connect(stop_levitate)
 
 func _physics_process(delta: float) -> void:
+	# run ability process functions
 	if selected_ability == "crouch":
-		# run timer for crouch ability cooldown
-		if crouch_cooldown >= 0:
-			crouch_cooldown -= delta
-		# handle crouching animation speed
-		# keep crouch_time between 0.0 and 1.0, going up or down depending on is_crouched
-		if crouch_time <= 1.0 and is_crouched:
-			crouch_time += delta
-		elif crouch_time >= 0.0 and not is_crouched:
-			crouch_time -= delta
-		# linear interpolation of collision shape using crouch_time as weight
-		# (e.g. crouch_time = 0.0 -> fully at base_height)
-		collision.shape.height = lerp(base_height, crouch_height, crouch_time)
+		_crouch_process(delta)
 	if selected_ability == "dodge":
-		# run timer for dodge length and interpolate velocity to prevent instant stop
-		if dodge_time >= 0:
-			dodge_time -= delta
-			player.velocity = player.velocity.lerp(Vector3(0,0,0), dodge_time)
-		# run timer for dodge cooldown
-		if dodge_cooldown >= 0:
-			dodge_cooldown -= delta
+		_dodge_process(delta)
+	if selected_ability == "levitate":
+		_levitate_process(delta)
 
 func stop_dodge() -> void:
 	# end the dodge when timer runs out
 	is_dodging = false
 	dodge_timer.stop()
+
+func stop_levitate() -> void:
+	# end levitate when timer runs out
+	is_levitating = false
+	levitate_timer.stop()
 
 func can_uncrouch() -> bool:
 	# check if any environment obstacles exist above player
@@ -67,6 +67,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 			_handle_crouch()
 		if selected_ability == "dodge":
 			_handle_dodge()
+		if selected_ability == "levitate":
+			_handle_levitate()
 
 func _handle_crouch() -> void:
 	# only allow ability use if player is on floor and cooldown is off
@@ -80,6 +82,20 @@ func _handle_crouch() -> void:
 			# crouch and start cooldown
 			is_crouched = true
 			crouch_cooldown = base_crouch_cooldown
+
+func _crouch_process(delta: float) -> void:
+	# run timer for crouch ability cooldown
+	if crouch_cooldown >= 0:
+		crouch_cooldown -= delta
+	# handle crouching animation speed
+	# keep crouch_time between 0.0 and 1.0, going up or down depending on is_crouched
+	if crouch_time <= 1.0 and is_crouched:
+		crouch_time += delta
+	elif crouch_time >= 0.0 and not is_crouched:
+		crouch_time -= delta
+	# linear interpolation of collision shape using crouch_time as weight
+	# (e.g. crouch_time = 0.0 -> fully at base_height)
+	collision.shape.height = lerp(base_height, crouch_height, crouch_time)
 
 func _handle_dodge() -> void:
 	# only allow use if cooldown is off
@@ -97,3 +113,38 @@ func _handle_dodge() -> void:
 			dodge_timer.start()
 			# set (not add) velocity of player
 			player.velocity = direction * dodge_power
+
+func _dodge_process(delta: float) -> void:
+	# run timer for dodge length and interpolate velocity to prevent instant stop
+	if dodge_time >= 0:
+		dodge_time -= delta
+		# linear interpolation of velocity with time spent dodging as weight
+		player.velocity = player.velocity.lerp(Vector3(0,0,0), dodge_time)
+	# run timer for dodge cooldown
+	if dodge_cooldown >= 0:
+		dodge_cooldown -= delta
+
+func _handle_levitate() -> void:
+	# only allow ability use if player is on floor
+	if player.is_on_floor():
+		ascent_time = 0
+		# get positions for beginning and intended heights
+		start_height = player.position.y
+		end_height = start_height + levitate_height
+		is_levitating = true
+		levitate_timer.wait_time = levitate_time
+		levitate_timer.start()
+	# cancel levitate if in the air
+	elif is_levitating and ascent_time >= 1.0:
+		stop_levitate()
+
+func _levitate_process(delta: float) -> void:
+	# run timer for length of ascent
+	if ascent_time < 1.0:
+		ascent_time += delta
+		# linear interpolation of y position using ascent_time as weight
+		player.position.y = lerp(start_height, end_height, ascent_time)
+		# stop upward movement if player collides with something
+		if player.is_on_ceiling():
+			end_height = player.position.y
+			ascent_time = 1.0
