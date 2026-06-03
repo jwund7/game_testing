@@ -3,6 +3,7 @@ extends Node
 @onready var player: Player = $".."
 @onready var collision: CollisionShape3D = $"../CollisionShape3D"
 @onready var uncrouch_check: Area3D = $"../UncrouchCheck"
+@onready var ability_menu: Control = $AbilityMenu
 @onready var dodge_timer: Timer = $DodgeTime
 @onready var levitate_timer: Timer = $LevitateTime
 
@@ -31,9 +32,12 @@ var ascent_time: float = 1.0
 var levitate_height: float = 2.0
 var levitate_time: float = 10.0
 
+# menu variables
+var select_open: bool = false
+
 func _ready() -> void:
-	# placeholder, could change when more abilities are added
-	selected_ability = "levitate"
+	# start game using dodge ability
+	selected_ability = "dodge"
 	dodge_timer.timeout.connect(stop_dodge)
 	levitate_timer.timeout.connect(stop_levitate)
 
@@ -45,6 +49,28 @@ func _physics_process(delta: float) -> void:
 		_dodge_process(delta)
 	if selected_ability == "levitate":
 		_levitate_process(delta)
+
+func _unhandled_input(_event: InputEvent) -> void:
+	# handle selection wheel opening and closing
+	if Input.is_action_just_pressed("ui_focus_next"):
+		select_open = true
+		ability_menu.open()
+	if Input.is_action_just_released("ui_focus_next"):
+		var current_ability: String = selected_ability
+		select_open = false
+		selected_ability = ability_menu.close()
+		# if no ability was selected with the wheel, revert to previously used ability
+		if selected_ability == "":
+			selected_ability = current_ability
+	
+	# handle ability usage
+	if Input.is_action_just_pressed("movement_ability") and not select_open:
+		if selected_ability == "crouch":
+			_handle_crouch()
+		if selected_ability == "dodge":
+			_handle_dodge()
+		if selected_ability == "levitate":
+			_handle_levitate()
 
 func stop_dodge() -> void:
 	# end the dodge when timer runs out
@@ -59,16 +85,6 @@ func stop_levitate() -> void:
 func can_uncrouch() -> bool:
 	# check if any environment obstacles exist above player
 	return len(uncrouch_check.get_overlapping_bodies()) <= 0
-
-func _unhandled_input(_event: InputEvent) -> void:
-	# handle ability usage
-	if Input.is_action_just_pressed("movement_ability"):
-		if selected_ability == "crouch":
-			_handle_crouch()
-		if selected_ability == "dodge":
-			_handle_dodge()
-		if selected_ability == "levitate":
-			_handle_levitate()
 
 func _handle_crouch() -> void:
 	# only allow ability use if player is on floor and cooldown is off
