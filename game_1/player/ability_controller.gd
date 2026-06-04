@@ -6,6 +6,7 @@ extends Node
 @onready var ability_menu: Control = $AbilityMenu
 @onready var dodge_timer: Timer = $DodgeTime
 @onready var levitate_timer: Timer = $LevitateTime
+@onready var ability_indicator: RichTextLabel = $AbilityIndicator
 
 var selected_ability: String
 
@@ -34,6 +35,7 @@ var levitate_time: float = 10.0
 
 # menu variables
 var select_open: bool = false
+var ability_timer: float = 1.0
 
 func _ready() -> void:
 	# start game using dodge ability
@@ -42,6 +44,8 @@ func _ready() -> void:
 	levitate_timer.timeout.connect(stop_levitate)
 
 func _physics_process(delta: float) -> void:
+	# change ability indicator to current ability
+	ability_indicator.text = selected_ability
 	# run ability process functions
 	if selected_ability == "crouch":
 		_crouch_process(delta)
@@ -49,13 +53,25 @@ func _physics_process(delta: float) -> void:
 		_dodge_process(delta)
 	if selected_ability == "levitate":
 		_levitate_process(delta)
+	# run ability switch cooldown
+	if ability_timer >= 0:
+		ability_timer -= delta
+		# temporarily continue every process function to finish canceling abilities
+		_crouch_process(delta)
+		_dodge_process(delta)
+		_levitate_process(delta)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	# handle selection wheel opening and closing
-	if Input.is_action_just_pressed("ui_focus_next"):
+	var switch_restricted: bool = is_crouched or is_dodging or is_levitating
+	# only allow wheel opening if no abilities are active
+	if Input.is_action_just_pressed("ui_focus_next") and not switch_restricted:
 		select_open = true
 		ability_menu.open()
 	if Input.is_action_just_released("ui_focus_next"):
+		# start a cooldown since abilities have just been switched
+		ability_timer = crouch_time + dodge_time
+		# get the currently used ability
 		var current_ability: String = selected_ability
 		select_open = false
 		selected_ability = ability_menu.close()
@@ -64,7 +80,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 			selected_ability = current_ability
 	
 	# handle ability usage
-	if Input.is_action_just_pressed("movement_ability") and not select_open:
+	if Input.is_action_just_pressed("movement_ability") and not select_open and ability_timer < 0:
 		if selected_ability == "crouch":
 			_handle_crouch()
 		if selected_ability == "dodge":
@@ -72,28 +88,13 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if selected_ability == "levitate":
 			_handle_levitate()
 
-func stop_dodge() -> void:
-	# end the dodge when timer runs out
-	is_dodging = false
-	dodge_timer.stop()
-
-func stop_levitate() -> void:
-	# end levitate when timer runs out
-	is_levitating = false
-	levitate_timer.stop()
-
-func can_uncrouch() -> bool:
-	# check if any environment obstacles exist above player
-	return len(uncrouch_check.get_overlapping_bodies()) <= 0
-
 func _handle_crouch() -> void:
 	# only allow ability use if player is on floor and cooldown is off
 	if player.is_on_floor() and crouch_cooldown < 0:
-		# ensure nothing is above player if uncrouching
-		if is_crouched and can_uncrouch():
+		# start uncrouch
+		if is_crouched:
 			# uncrouch and start cooldown
-			is_crouched = false
-			crouch_cooldown = base_crouch_cooldown
+			stop_crouch()
 		elif not is_crouched:
 			# crouch and start cooldown
 			is_crouched = true
@@ -109,9 +110,24 @@ func _crouch_process(delta: float) -> void:
 		crouch_time += delta
 	elif crouch_time >= 0.0 and not is_crouched:
 		crouch_time -= delta
+	# cancel uncrouch if player collides with something
+	if player.is_on_ceiling():
+		is_crouched = true
 	# linear interpolation of collision shape using crouch_time as weight
 	# (e.g. crouch_time = 0.0 -> fully at base_height)
 	collision.shape.height = lerp(base_height, crouch_height, crouch_time)
+
+func can_uncrouch() -> bool:
+	# check if any environment obstacles exist above player
+	# found a different solution since this sometimes randomly just doesn't work
+	#print(uncrouch_check.get_overlapping_bodies())
+	#return len(uncrouch_check.get_overlapping_bodies()) <= 0
+	return true
+
+func stop_crouch() -> void:
+	# uncrouch and start cooldown
+	is_crouched = false
+	crouch_cooldown = base_crouch_cooldown
 
 func _handle_dodge() -> void:
 	# only allow use if cooldown is off
@@ -140,6 +156,11 @@ func _dodge_process(delta: float) -> void:
 	if dodge_cooldown >= 0:
 		dodge_cooldown -= delta
 
+func stop_dodge() -> void:
+	# end the dodge when timer runs out
+	is_dodging = false
+	dodge_timer.stop()
+
 func _handle_levitate() -> void:
 	# only allow ability use if player is on floor
 	if player.is_on_floor():
@@ -164,3 +185,8 @@ func _levitate_process(delta: float) -> void:
 		if player.is_on_ceiling():
 			end_height = player.position.y
 			ascent_time = 1.0
+
+func stop_levitate() -> void:
+	# end levitate when timer runs out
+	is_levitating = false
+	levitate_timer.stop()

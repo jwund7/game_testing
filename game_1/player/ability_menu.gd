@@ -28,6 +28,10 @@ func _draw() -> void:
 		var avg_radius: float = (inner_radius + outer_radius) / 2
 		
 		# draw selection highlight
+		# this makes a lot more sense if explained visually but basically a point is created at
+		# the specified number of subdivisions for whichever ability is selected at both the
+		# inner and outer circles, then the outer points have their order reversed so the polygon
+		# makes the correct shape instead of clipping through itself
 		if selected_ability == i:
 			var points_in_arc: int = 32
 			var points_inner := PackedVector2Array()

@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://ddeedb53jmql6"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_cup3i"]
-top_radius = 0.05
-bottom_radius = 0.05
+top_radius = 0.04
+bottom_radius = 0.04
 height = 1.0
 
 [node name="Rope" type="Node3D"]

@@ -160,13 +160,13 @@ collision_layer = 2
 size = Vector3(2, 0.8, 2)
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="ParkourBlocks"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 9.46214, 10.654326)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 10.50464, 10.654326)
 use_collision = true
 collision_layer = 2
 size = Vector3(2, 0.8, 2)
 
 [node name="GrapplePoint3" parent="ParkourBlocks" instance=ExtResource("3_4717r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 12.974927, 10.670327)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 14.49377, 10.670327)
 
 [node name="GrapplePoint4" parent="ParkourBlocks" instance=ExtResource("3_4717r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5330105, 17.224821, -9.913692)
