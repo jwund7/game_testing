@@ -23,17 +23,19 @@ func _draw() -> void:
 		# TAU = 2pi
 		var start_rad: float = TAU * i / len(abilities)
 		var end_rad: float = TAU * (i + 1) / len(abilities)
+		# divide by negative due to Godot's 2D coordinate system
 		var avg_rad: float = (start_rad + end_rad) / -2
+		# get a normalized vector for the angle in between the two new lines
 		var point: Vector2 = Vector2.from_angle(avg_rad).normalized()
 		var avg_radius: float = (inner_radius + outer_radius) / 2
 		
 		# draw selection highlight
 		# this makes a lot more sense if explained visually but basically a point is created at
-		# the specified number of subdivisions for whichever ability is selected at both the
-		# inner and outer circles, then the outer points have their order reversed so the polygon
-		# makes the correct shape instead of clipping through itself
+		# the specified number of subdivisions for the hovered ability at both the inner and
+		# outer circles, then the outer points have their order reversed so the polygon makes
+		# the correct shape instead of clipping through itself
 		if selected_ability == i:
-			var points_in_arc: int = 32
+			var points_in_arc: int = 12
 			var points_inner := PackedVector2Array()
 			var points_outer := PackedVector2Array()
 			for j in range(points_in_arc + 1):
@@ -47,11 +49,12 @@ func _draw() -> void:
 		draw_string(ThemeDB.fallback_font, point * avg_radius, abilities[i])
 		
 		# draw an inner circle
-		draw_arc(screen_center, inner_radius, 0, TAU, 128, light_grey, line_width, true)
+		draw_arc(screen_center, inner_radius, 0, TAU, 32, light_grey, line_width, true)
 		# draw an outer circle
-		draw_arc(screen_center, outer_radius, 0, TAU, 128, light_grey, line_width, true)
+		draw_arc(screen_center, outer_radius, 0, TAU, 64, light_grey, line_width, true)
 	
 	# draw lines on circle
+	# since draw calls cover each other, lines are drawn after to cover selection highlight edges
 	for i in range(len(abilities)):
 		var rad: float = TAU * i / len(abilities)
 		var point: Vector2 = Vector2.from_angle(rad).normalized()
@@ -62,6 +65,7 @@ func _process(_delta: float) -> void:
 	var mouse_pos: Vector2 = get_local_mouse_position()
 	var mouse_length: float = mouse_pos.length()
 	if mouse_length > inner_radius:
+		# multiply by -1 due to Godot's 2D coordinate system
 		var mouse_angle: float = fposmod(-1 * mouse_pos.angle(), TAU)
 		selected_ability = ceil((mouse_angle / TAU) * len(abilities) - 1)
 	# if no ability is hovered, set selected_ability to value outside of range
