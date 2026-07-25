@@ -1,0 +1,202 @@
+[gd_scene load_steps=10 format=3 uid="uid://ccod5lxxnr08j"]
+
+[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://world/floor_grid.png" id="1_e6swj"]
+[ext_resource type="PackedScene" uid="uid://crxfpa6j1rapc" path="res://world/grapple_point.tscn" id="3_kyusj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j1lpk"]
+sky_top_color = Color(0.41794145, 0.6273441, 0.84492874, 1)
+
+[sub_resource type="Sky" id="Sky_4717r"]
+sky_material = SubResource("ProceduralSkyMaterial_j1lpk")
+
+[sub_resource type="Environment" id="Environment_pwyc1"]
+background_mode = 2
+sky = SubResource("Sky_4717r")
+ssao_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4717r"]
+albedo_color = Color(0.8992584, 0.8992584, 0.8992584, 1)
+albedo_texture = ExtResource("1_e6swj")
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hi66e"]
+material = SubResource("StandardMaterial3D_4717r")
+size = Vector2(30, 30)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_wffip"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nfqup"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.63529414)
+
+[node name="TestEnvironment" type="StaticBody3D" groups=["Maps"]]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pwyc1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.61663944, 0.74175775, 0.26372555, 0.017281583, -0.3476713, 0.9374571, 0.787056, -0.5735154, -0.22720659, 0, 8.193073, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 40.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_hi66e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("WorldBoundaryShape3D_wffip")
+
+[node name="TestCam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.84704775, 0.53151685, 0, -0.53151685, 0.84704775, 0, 5.2909203, 12.941171)
+
+[node name="ParkourBlocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.467108, 0, 1.2688694)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4671078, 0.4, 4.4311304)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4671078, 0.8, 0.45013058)
+use_collision = true
+collision_layer = 2
+size = Vector3(1, 1.6, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46710777, 1.4, -2.5498695)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9533911, 1.2648138, 4.4312935)
+use_collision = true
+collision_layer = 2
+size = Vector3(2.0419922, 0.8, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77763367, 2.3208013, 4.4332056)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.03, 3.7, 2.1)
+material = SubResource("StandardMaterial3D_nfqup")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4801579, 1.0355188, -4.2435484)
+operation = 2
+use_collision = true
+collision_layer = 2
+size = Vector3(2.1054688, 2.0995116, 5.3867188)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900589, 0.85758054, 0.73012364)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.6549072, 1.7151611, 0.6040039)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6261044, 0.85758054, 0.73012364)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.6549072, 1.7151611, 0.6040039)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8796654, 0.71590006, 2.0488305)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.577827, 1.0647184, -0.9921708)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CSGBox3D11" type="CSGPolygon3D" parent="ParkourBlocks"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.60748386, 1, -6.9373484)
+use_collision = true
+collision_layer = 2
+polygon = PackedVector2Array(-1.8438663, -1.0382155, -1.8204498, 1.0851285, 0.6982546, -1.0513287)
+depth = 2.0
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 4, -13.016)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="GrapplePoint" parent="ParkourBlocks" instance=ExtResource("3_kyusj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 7.5, -13)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51999, 10.022474, -8.921985)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="GrapplePoint2" parent="ParkourBlocks" instance=ExtResource("3_kyusj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51999, 13.535261, -8.905985)
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.5, 12, -10)
+use_collision = true
+collision_layer = 2
+size = Vector3(0.03, 3.7, 2.5)
+material = SubResource("StandardMaterial3D_nfqup")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 9.7, -4.2)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 10.50464, 10.654326)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="GrapplePoint3" parent="ParkourBlocks" instance=ExtResource("3_kyusj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.209184, 14.49377, 10.670327)
+
+[node name="GrapplePoint4" parent="ParkourBlocks" instance=ExtResource("3_kyusj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5330105, 17.224821, -9.913692)
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.561945, 12.635243, -13.328857)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="GrapplePoint5" parent="ParkourBlocks" instance=ExtResource("3_kyusj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.561945, 16.14803, -13.312857)
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="ParkourBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4498353, 2.3342953, -4.6961827)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 0.8, 2)
+
+[node name="CrawlBlocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(1.9997559, 3, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(1.9997559, 3, 0.5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CrawlBlocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+use_collision = true
+collision_layer = 2
+size = Vector3(2, 2, 0.5)

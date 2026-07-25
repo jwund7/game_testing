@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvhwke0asdaek"]
+
+[ext_resource type="PackedScene" uid="uid://n55da7hmn8ci" path="res://world/jail_cells.tscn" id="1_0u2o0"]
+[ext_resource type="PackedScene" uid="uid://xxo87chegtl" path="res://world/hallway.tscn" id="2_jjmkw"]
+[ext_resource type="PackedScene" uid="uid://bkw4joaxspcnb" path="res://world/hallway_corner.tscn" id="3_jjmkw"]
+[ext_resource type="PackedScene" uid="uid://w3dp0w12q8cv" path="res://world/room.tscn" id="4_s5sgh"]
+
+[sub_resource type="Environment" id="Environment_s5sgh"]
+ssao_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+fog_depth_curve = 0.4
+fog_depth_begin = 8.0
+fog_depth_end = 18.0
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fe0n8"]
+
+[node name="Level" type="StaticBody3D" groups=["Maps"]]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s5sgh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 10)
+shape = SubResource("WorldBoundaryShape3D_fe0n8")
+
+[node name="JailCells" parent="." instance=ExtResource("1_0u2o0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 10)
+
+[node name="Hallway" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 17)
+
+[node name="Hallway2" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 17)
+
+[node name="HallwayCorner" parent="." instance=ExtResource("3_jjmkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 17)
+
+[node name="Hallway3" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -23, 0, 20)
+
+[node name="Hallway4" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -23, 0, 24)
+
+[node name="Hallway5" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -23, 0, 28)
+
+[node name="HallwayCorner2" parent="." instance=ExtResource("3_jjmkw")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -23, 0, 31)
+
+[node name="Hallway6" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, 31)
+
+[node name="Hallway7" parent="." instance=ExtResource("2_jjmkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 31)
+
+[node name="Room" parent="." instance=ExtResource("4_s5sgh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -34, 0, 31)

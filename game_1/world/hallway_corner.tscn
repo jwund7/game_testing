@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkw4joaxspcnb"]
+
+[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://world/floor_grid.png" id="1_43ryh"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_43ryh"]
+points = PackedVector3Array(1, 1, 0, 1, -1, 0, -1, 1, 0, -1, -1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fopb3"]
+albedo_texture = ExtResource("1_43ryh")
+uv1_scale = Vector3(2, 2, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_l85mi"]
+material = SubResource("StandardMaterial3D_fopb3")
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_43ryh"]
+size = Vector2(2, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8toqq"]
+points = PackedVector3Array(1, 1, 0, 1, -1, 0, -1, 1, 0, -1, -1, 0)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fopb3"]
+points = PackedVector3Array(1, 1, 0, 1, -1, 0, -1, 1, 0, -1, -1, 0)
+
+[node name="HallwayCorner" type="StaticBody3D"]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_43ryh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_l85mi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -3.821371e-15, 8.742278e-08, -8.742278e-08, 4.371139e-08, -1, 0, -1, -4.371139e-08, 0, 2, 0)
+mesh = SubResource("QuadMesh_l85mi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+mesh = SubResource("QuadMesh_43ryh")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+shape = SubResource("ConvexPolygonShape3D_8toqq")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 1, 0)
+mesh = SubResource("QuadMesh_43ryh")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_fopb3")
