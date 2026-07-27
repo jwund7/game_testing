@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://xxo87chegtl"]
 
-[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://world/floor_grid.png" id="1_0f3sx"]
+[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://assets/floor_grid.png" id="1_0f3sx"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_7l0yh"]
 size = Vector2(4, 2)

@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvhwke0asdaek"]
 
-[ext_resource type="PackedScene" uid="uid://n55da7hmn8ci" path="res://world/jail_cells.tscn" id="1_0u2o0"]
-[ext_resource type="PackedScene" uid="uid://xxo87chegtl" path="res://world/hallway.tscn" id="2_jjmkw"]
-[ext_resource type="PackedScene" uid="uid://bkw4joaxspcnb" path="res://world/hallway_corner.tscn" id="3_jjmkw"]
-[ext_resource type="PackedScene" uid="uid://w3dp0w12q8cv" path="res://world/room.tscn" id="4_s5sgh"]
+[ext_resource type="PackedScene" uid="uid://n55da7hmn8ci" path="res://world/components/jail_cells.tscn" id="1_0u2o0"]
+[ext_resource type="PackedScene" uid="uid://xxo87chegtl" path="res://world/components/hallway.tscn" id="2_jjmkw"]
+[ext_resource type="PackedScene" uid="uid://bkw4joaxspcnb" path="res://world/components/hallway_corner.tscn" id="3_jjmkw"]
+[ext_resource type="PackedScene" uid="uid://w3dp0w12q8cv" path="res://world/components/room.tscn" id="4_s5sgh"]
 
 [sub_resource type="Environment" id="Environment_s5sgh"]
 ssao_enabled = true

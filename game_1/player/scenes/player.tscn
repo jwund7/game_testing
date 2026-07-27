@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://bcqmasf81enlv"]
 
-[ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://player/player.gd" id="1_oul6g"]
-[ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://player/rope.tscn" id="2_g1dw6"]
-[ext_resource type="Script" uid="uid://0sus41liyryf" path="res://player/grapple_controller.gd" id="2_rkbax"]
-[ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://world/crosshair.png" id="4_yw30f"]
-[ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://player/ability_controller.gd" id="5_qjkh3"]
-[ext_resource type="PackedScene" uid="uid://rgslug1vhh5w" path="res://player/ability_menu.tscn" id="6_g6k8r"]
+[ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://player/scripts/player.gd" id="1_oul6g"]
+[ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://player/scenes/rope.tscn" id="2_g1dw6"]
+[ext_resource type="Script" uid="uid://0sus41liyryf" path="res://player/scripts/grapple_controller.gd" id="2_rkbax"]
+[ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://assets/crosshair.png" id="4_yw30f"]
+[ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://player/scripts/ability_controller.gd" id="5_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://rgslug1vhh5w" path="res://player/scenes/ability_menu.tscn" id="6_g6k8r"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 height = 1.8

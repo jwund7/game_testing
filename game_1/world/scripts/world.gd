@@ -1,7 +1,7 @@
 extends StaticBody3D
 
-const TEST = preload("res://world/test_environment.tscn")
-const LEVEL = preload("res://world/level.tscn")
+const TEST = preload("res://world/scenes/test_environment.tscn")
+const LEVEL = preload("res://world/scenes/level.tscn")
 
 var current_setting: String = "test"
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkw4joaxspcnb"]
 
-[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://world/floor_grid.png" id="1_43ryh"]
+[ext_resource type="Texture2D" uid="uid://cb5ac7lnx0rko" path="res://assets/floor_grid.png" id="1_43ryh"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_43ryh"]
 points = PackedVector3Array(1, 1, 0, 1, -1, 0, -1, 1, 0, -1, -1, 0)
