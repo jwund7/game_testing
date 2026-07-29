@@ -5,7 +5,6 @@ class_name Player
 
 @onready var cam_mount: Node3D = $Head
 @onready var camera: Camera3D = $Head/PlayerCam
-@onready var grapple_controller: Node = $GrappleController
 @onready var ability_controller: Node = $AbilityController
 
 const SENS: float = 0.35
@@ -94,7 +93,7 @@ func _air_physics(delta: float, direction: Vector3) -> void:
 		# ensure velocity is not increased beyond speed cap
 		accel_speed = min(accel_speed, add_speed)
 		# only apply air physics if a grapple is not in progress
-		if not grapple_controller.is_launched:
+		if not ability_controller.is_grappling:
 			self.velocity += accel_speed * direction
 
 func _levitate_physics(delta: float, direction: Vector3) -> void:
@@ -103,7 +102,7 @@ func _levitate_physics(delta: float, direction: Vector3) -> void:
 	# add velocity based on direction
 	self.velocity += levitate_accel * direction * delta
 	# prevent velocity changes while grappling
-	if not grapple_controller.is_launched:
+	if not ability_controller.is_grappling:
 		# slow down while no movement is occurring
 		if direction.length() == 0.0:
 			self.velocity -= self.velocity * delta

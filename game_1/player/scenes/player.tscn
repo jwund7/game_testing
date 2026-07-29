@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcqmasf81enlv"]
+[gd_scene load_steps=9 format=3 uid="uid://bcqmasf81enlv"]
 
 [ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://player/scripts/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://player/scenes/rope.tscn" id="2_g1dw6"]
-[ext_resource type="Script" uid="uid://0sus41liyryf" path="res://player/scripts/grapple_controller.gd" id="2_rkbax"]
 [ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://assets/crosshair.png" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://player/scripts/ability_controller.gd" id="5_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://rgslug1vhh5w" path="res://player/scenes/ability_menu.tscn" id="6_g6k8r"]
@@ -46,14 +45,14 @@ collision_mask = 6
 [node name="Rope" parent="Head/PlayerCam" instance=ExtResource("2_g1dw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, -0.18, 0)
 
-[node name="GrappleController" type="Node" parent="."]
-script = ExtResource("2_rkbax")
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("5_qjkh3")
 
-[node name="GrappleTimeout" type="Timer" parent="GrappleController"]
+[node name="GrappleTimeout" type="Timer" parent="AbilityController"]
 wait_time = 1.5
 one_shot = true
 
-[node name="GrappleIndicator" type="RichTextLabel" parent="."]
+[node name="GrappleIndicator" type="RichTextLabel" parent="AbilityController"]
 visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(100, 100)
@@ -65,9 +64,6 @@ rotation = -1.5707964
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
 text = "( )"
-
-[node name="AbilityController" type="Node" parent="."]
-script = ExtResource("5_qjkh3")
 
 [node name="DodgeTime" type="Timer" parent="AbilityController"]
 wait_time = 0.2

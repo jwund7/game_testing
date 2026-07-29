@@ -11,7 +11,7 @@ var grey: Color = Color("666666")
 var mid_grey: Color = Color("888888")
 var light_grey: Color = Color("aaaaaa")
 
-var abilities: Array[String] = ["crouch", "dodge", "levitate"]
+var abilities: Array[String] = ["crouch", "dodge", "levitate", "grapple"]
 var selected_ability: int
 
 func _draw() -> void:
