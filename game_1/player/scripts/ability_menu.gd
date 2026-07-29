@@ -7,16 +7,16 @@ var inner_radius: float = 64.0
 var outer_radius: float = 384.0
 var line_width: float = 3.0
 
-var grey: Color = Color("666666")
-var mid_grey: Color = Color("888888")
-var light_grey: Color = Color("aaaaaa")
+var base_color: Color = Color("4480d0")
+var highlight_color: Color = Color("4190cc")
+var line_color: Color = Color("8bcfeb")
 
 var abilities: Array[String] = ["crouch", "dodge", "levitate", "grapple"]
 var selected_ability: int
 
 func _draw() -> void:
 	# draw a circle for selection wheel
-	draw_circle(screen_center, outer_radius, grey)
+	draw_circle(screen_center, outer_radius, base_color)
 	
 	# draw abilities on circle
 	for i in range(len(abilities)):
@@ -43,22 +43,26 @@ func _draw() -> void:
 				points_inner.append(inner_radius * Vector2.from_angle(TAU - angle))
 				points_outer.append(outer_radius * Vector2.from_angle(TAU - angle))
 			points_outer.reverse()
-			draw_polygon(points_inner + points_outer, PackedColorArray([mid_grey]))
+			draw_polygon(points_inner + points_outer, PackedColorArray([highlight_color]))
 		
+		# get the screen size of the string to center the drawn text
+		var font_offset: Vector2 = ThemeDB.fallback_font.get_string_size(abilities[i]) / 2
+		var font_off_y: float = ThemeDB.fallback_font.get_ascent()
+		var font_location: Vector2 = (point * avg_radius) + Vector2(0, font_off_y) - font_offset
 		# draw ability name
-		draw_string(ThemeDB.fallback_font, point * avg_radius, abilities[i])
+		draw_string(ThemeDB.fallback_font, font_location, abilities[i])
 		
 		# draw an inner circle
-		draw_arc(screen_center, inner_radius, 0, TAU, 32, light_grey, line_width, true)
+		draw_arc(screen_center, inner_radius, 0, TAU, 32, line_color, line_width, true)
 		# draw an outer circle
-		draw_arc(screen_center, outer_radius, 0, TAU, 64, light_grey, line_width, true)
+		draw_arc(screen_center, outer_radius, 0, TAU, 64, line_color, line_width, true)
 	
 	# draw lines on circle
 	# since draw calls cover each other, lines are drawn after to cover selection highlight edges
 	for i in range(len(abilities)):
 		var rad: float = TAU * i / len(abilities)
 		var point: Vector2 = Vector2.from_angle(rad).normalized()
-		draw_line(point * inner_radius, point * outer_radius, light_grey, line_width, true)
+		draw_line(point * inner_radius, point * outer_radius, line_color, line_width, true)
 
 func _process(_delta: float) -> void:
 	# get hovered ability by mouse position
