@@ -13,19 +13,15 @@ extends Node
 @onready var levitate_timer: Timer = $LevitateTime
 # nodes required for grapple ability
 @onready var grapple_timeout: Timer = $GrappleTimeout
-@onready var ray: RayCast3D = $"../Head/PlayerCam/RayCast3D"
+@onready var ray: RayCast3D = $"../Head/PlayerCam/GrappleRay"
 @onready var rope: Node3D = $"../Head/PlayerCam/Rope"
 @onready var grapple_indicator: RichTextLabel = $GrappleIndicator
-
-var selected_ability: String
 
 # ability variables
 @export var is_crouched: bool = false
 @export var is_dodging: bool = false
 @export var is_levitating: bool = false
 @export var is_grappling: bool = false
-
-# ability objects
 var crouch_ability: CrouchAbility
 var dodge_ability: DodgeAbility
 var levitate_ability: LevitateAbility
@@ -34,6 +30,7 @@ var grapple_ability: GrappleAbility
 # menu variables
 var select_open: bool = false
 var ability_timer: float = 0.0
+var selected_ability: String
 
 func _ready() -> void:
 	# start game using grapple ability
@@ -98,7 +95,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if selected_ability == "grapple" and not is_grappling:
 			grapple_ability.handle_ability()
 
-# each function below runs its respective process and pass through its ability active variable
+# each function below runs its respective process and passes through its ability active variable
 func _crouch_process(delta: float) -> void:
 	crouch_ability.ability_process(delta)
 	is_crouched = crouch_ability.is_crouched

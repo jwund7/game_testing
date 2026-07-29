@@ -38,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365, 0)
 [node name="PlayerCam" type="Camera3D" parent="Head"]
 current = true
 
-[node name="RayCast3D" type="RayCast3D" parent="Head/PlayerCam"]
+[node name="GrappleRay" type="RayCast3D" parent="Head/PlayerCam"]
 target_position = Vector3(0, 0, -10)
 collision_mask = 6
 
