@@ -69,7 +69,7 @@ text = "( )"
 wait_time = 0.2
 
 [node name="LevitateTime" type="Timer" parent="AbilityController"]
-wait_time = 5.0
+wait_time = 10.0
 
 [node name="AbilityMenu" parent="AbilityController" instance=ExtResource("6_g6k8r")]
 
