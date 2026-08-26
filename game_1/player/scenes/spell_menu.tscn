@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://rgslug1vhh5w"]
+[gd_scene load_steps=6 format=3 uid="uid://bgioghnq8mwwm"]
 
-[ext_resource type="Script" uid="uid://tkq8n3giw3ly" path="res://player/scripts/ability_menu.gd" id="1_ineke"]
+[ext_resource type="Script" uid="uid://de322d0my1oc" path="res://player/scripts/spell_menu.gd" id="1_bpsku"]
 
 [sub_resource type="Animation" id="Animation_uk2t2"]
 length = 0.001
@@ -90,7 +90,7 @@ _data = {
 &"open": SubResource("Animation_ineke")
 }
 
-[node name="AbilityMenu" type="Control"]
+[node name="SpellMenu" type="Control"]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -103,7 +103,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
-script = ExtResource("1_ineke")
+script = ExtResource("1_bpsku")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

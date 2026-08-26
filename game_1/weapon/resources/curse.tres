@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://byexi1u5yvm38"]
+
+[ext_resource type="Script" uid="uid://cec3rrc328a3g" path="res://weapon/scripts/spell_base.gd" id="1_pysta"]
+[ext_resource type="PackedScene" uid="uid://b14e63c2t7n6f" path="res://weapon/scenes/curse.tscn" id="2_q0rfg"]
+
+[resource]
+script = ExtResource("1_pysta")
+name = "Curse"
+cooldown = 5.0
+damage = 0.1
+spell_scene = ExtResource("2_q0rfg")
+metadata/_custom_type_script = "uid://cec3rrc328a3g"

@@ -31,6 +31,8 @@ transparency = 1
 albedo_color = Color(1, 1, 1, 0.63529414)
 
 [node name="TestEnvironment" type="StaticBody3D" groups=["Maps"]]
+collision_layer = 2
+collision_mask = 9
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pwyc1")

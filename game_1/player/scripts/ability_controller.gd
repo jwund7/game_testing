@@ -69,8 +69,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 	# handle selection wheel opening and closing
 	var crouch_check: bool = crouch_ability.crouch_progress > 0
 	var switch_restricted: bool = crouch_check or is_dodging or is_levitating or is_grappling
+	var spell_select: bool = player.spell_controller.select_open
 	# only allow wheel opening if no abilities are active
-	if Input.is_action_just_pressed("ui_focus_next") and not switch_restricted:
+	if Input.is_action_just_pressed("ui_focus_next") and not (switch_restricted or spell_select):
 		select_open = true
 		ability_menu.open()
 	if Input.is_action_just_released("ui_focus_next"):

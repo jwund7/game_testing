@@ -1,12 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcqmasf81enlv"]
+[gd_scene load_steps=12 format=3 uid="uid://bcqmasf81enlv"]
 
 [ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://player/scripts/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://player/scenes/rope.tscn" id="2_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://assets/crosshair.png" id="4_yw30f"]
 [ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://player/scripts/ability_controller.gd" id="5_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://rgslug1vhh5w" path="res://player/scenes/ability_menu.tscn" id="6_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://cfd5h4t6evl8w" path="res://weapon/scenes/wand.tscn" id="6_tn8gd"]
+[ext_resource type="Script" uid="uid://bo1ibmcirmnte" path="res://player/scripts/spell_controller.gd" id="7_4qt65"]
+[ext_resource type="PackedScene" uid="uid://bgioghnq8mwwm" path="res://player/scenes/spell_menu.tscn" id="7_okfwm"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
+radius = 0.4
 height = 1.8
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
@@ -44,6 +48,9 @@ collision_mask = 6
 
 [node name="Rope" parent="Head/PlayerCam" instance=ExtResource("2_g1dw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, -0.18, 0)
+
+[node name="Wand" parent="Head/PlayerCam" instance=ExtResource("6_tn8gd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34032798, -0.17082661, -0.3622897)
 
 [node name="AbilityController" type="Node" parent="."]
 script = ExtResource("5_qjkh3")
@@ -84,6 +91,27 @@ offset_right = 310.0
 grow_vertical = 0
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
+
+[node name="SpellController" type="Node" parent="."]
+script = ExtResource("7_4qt65")
+
+[node name="SpellMenu" parent="SpellController" instance=ExtResource("7_okfwm")]
+
+[node name="SpellIndicator" type="RichTextLabel" parent="SpellController"]
+custom_minimum_size = Vector2(300, 50)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -50.0
+offset_right = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 32
+horizontal_alignment = 2
 
 [node name="UncrouchCheck" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)

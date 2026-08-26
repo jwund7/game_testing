@@ -1,11 +1,11 @@
 extends CharacterBody3D
 class_name Player
 
-@export var weapon_cooldown: float = 0.5
-
 @onready var cam_mount: Node3D = $Head
 @onready var camera: Camera3D = $Head/PlayerCam
 @onready var ability_controller: Node = $AbilityController
+@onready var spell_controller: Node = $SpellController
+@onready var wand: Node3D = $Head/PlayerCam/Wand
 
 const SENS: float = 0.35
 
@@ -109,6 +109,8 @@ func _levitate_physics(delta: float, direction: Vector3) -> void:
 		# clamp velocity to prevent going over max speed
 		self.velocity = self.velocity.clamp(-max_speed, max_speed)
 
+# this kinda sucks, try making a player state machine at some point
+# PLEASE GOD MAKE A STATE MACHINE
 func _physics_process(delta: float) -> void:
 	# movement
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
@@ -150,6 +152,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if Input.is_action_just_pressed("left_click") and not spell_controller.select_open:
+		wand.use_spell(spell_controller.selected_spell)
 	
 	# handle camera movement
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
