@@ -15,6 +15,10 @@ run/main_scene="uid://b3wt5jklv5kfm"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerManager="*res://character/player/scripts/player_manager.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -89,3 +93,4 @@ spell_select={
 3d_physics/layer_2="environment"
 3d_physics/layer_3="grapple"
 3d_physics/layer_4="player_projectile"
+3d_physics/layer_5="enemy"

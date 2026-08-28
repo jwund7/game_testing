@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bgioghnq8mwwm"]
 
-[ext_resource type="Script" uid="uid://de322d0my1oc" path="res://player/scripts/spell_menu.gd" id="1_bpsku"]
+[ext_resource type="Script" uid="uid://de322d0my1oc" path="res://character/player/scripts/spell_menu.gd" id="1_bpsku"]
 
 [sub_resource type="Animation" id="Animation_uk2t2"]
 length = 0.001

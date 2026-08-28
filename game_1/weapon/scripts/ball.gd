@@ -1,9 +1,13 @@
 extends Node3D
 
+# weird error happens when trying to preload this, "forgets" Spell class somehow
+# based on Github issue report it might be fixed in 4.6?
+var BALL: Spell = load("res://weapon/resources/ball.tres")
+
 @onready var ray: RayCast3D = $RayCast3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const SPEED: float = 8.0
+const SPEED: float = 10.0
 
 func _ready():
 	animation_player.play("grow")
@@ -22,4 +26,10 @@ func _physics_process(delta: float) -> void:
 	# deletes projectile if it collides with a wall
 	if ray.is_colliding() and ray.get_collider() is StaticBody3D:
 		print("DELETE")
+		queue_free()
+
+func _on_hitbox_area_entered(area: Area3D) -> void:
+	if area is HitboxComponent:
+		# make enemy take damage if the hitbox collides with theirs
+		area.hit(BALL.damage)
 		queue_free()

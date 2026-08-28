@@ -1,7 +1,6 @@
 extends Node
 
 # general nodes required for spell select function
-@onready var player: Player = $".."
 @onready var spell_indicator: RichTextLabel = $SpellIndicator
 @onready var spell_menu: Control = $SpellMenu
 
@@ -9,9 +8,15 @@ extends Node
 var select_open: bool = false
 var selected_spell: String
 
+var player: Player = PlayerManager.player
+
 func _ready() -> void:
 	# start game using ball spell
 	selected_spell = "ball"
+	spell_indicator.text = selected_spell
+	# wait until player exists and get the player
+	await get_parent().ready
+	player = PlayerManager.player
 
 func _unhandled_input(_event: InputEvent) -> void:
 	# handle selection wheel opening and closing
@@ -28,6 +33,5 @@ func _unhandled_input(_event: InputEvent) -> void:
 		# if no ability was selected with the wheel, revert to previously used ability
 		if selected_spell == "":
 			selected_spell = current_ability
-
-func _physics_process(_delta: float) -> void:
-	spell_indicator.text = selected_spell
+		# change spell indicator to current spell
+		spell_indicator.text = selected_spell

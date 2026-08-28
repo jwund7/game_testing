@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://rgslug1vhh5w"]
 
-[ext_resource type="Script" uid="uid://tkq8n3giw3ly" path="res://player/scripts/ability_menu.gd" id="1_ineke"]
+[ext_resource type="Script" uid="uid://tkq8n3giw3ly" path="res://character/player/scripts/ability_menu.gd" id="1_ineke"]
 
 [sub_resource type="Animation" id="Animation_uk2t2"]
 length = 0.001
