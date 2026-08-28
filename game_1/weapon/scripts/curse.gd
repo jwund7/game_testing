@@ -6,7 +6,7 @@ var cursed_enemies: Array[Enemy]
 var curse_effect: float = 0.5
 var curse_time: float = 2.0
 
-func _ready():
+func _ready() -> void:
 	# sets a short max existence timer
 	var death_timer: Timer = Timer.new()
 	death_timer.wait_time = 0.2

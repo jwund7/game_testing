@@ -10,7 +10,7 @@ var ball_cooldown: float = 0.0
 var explosion_cooldown: float = 0.0
 var curse_cooldown: float = 0.0
 
-func use_spell(selected_spell: String):
+func use_spell(selected_spell: String) -> void:
 	if selected_spell == "ball" and ball_cooldown <= 0:
 		use_ball()
 	if selected_spell == "explosion" and explosion_cooldown <= 0:
@@ -18,7 +18,7 @@ func use_spell(selected_spell: String):
 	if selected_spell == "curse" and curse_cooldown <= 0:
 		use_curse()
 
-func use_ball():
+func use_ball() -> void:
 	# instances a new bullet at the weapon end
 	var new_bullet: Node3D = BALL.spell_scene.instantiate()
 	new_bullet.position = weapon_ray.global_position
@@ -26,14 +26,14 @@ func use_ball():
 	get_tree().root.add_child(new_bullet)
 	ball_cooldown = BALL.cooldown
 
-func use_explosion():
+func use_explosion() -> void:
 	# instances an explosion centered around the player
 	var new_explosion: Node3D = EXPLOSION.spell_scene.instantiate()
 	new_explosion.position = self.global_position
 	get_tree().root.add_child(new_explosion)
 	explosion_cooldown = EXPLOSION.cooldown
 
-func use_curse():
+func use_curse() -> void:
 	# instance a curse hitbox centered around the player
 	var new_curse: Node3D = CURSE.spell_scene.instantiate()
 	new_curse.position = self.global_position - Vector3(0,1,0)

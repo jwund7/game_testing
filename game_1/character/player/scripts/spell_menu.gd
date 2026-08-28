@@ -31,7 +31,7 @@ func _draw() -> void:
 		
 		# draw selection highlight
 		# this makes a lot more sense if explained visually but basically a point is created at
-		# the specified number of subdivisions for the hovered ability at both the inner and
+		# the specified number of subdivisions for the hovered spell at both the inner and
 		# outer circles, then the outer points have their order reversed so the polygon makes
 		# the correct shape instead of clipping through itself
 		if selected_spell == i:
@@ -49,7 +49,7 @@ func _draw() -> void:
 		var font_offset: Vector2 = ThemeDB.fallback_font.get_string_size(spells[i]) / 2
 		var font_off_y: float = ThemeDB.fallback_font.get_ascent()
 		var font_location: Vector2 = (point * avg_radius) + Vector2(0, font_off_y) - font_offset
-		# draw ability name
+		# draw spell name
 		draw_string(ThemeDB.fallback_font, font_location, spells[i])
 		
 		# draw an inner circle
@@ -65,19 +65,20 @@ func _draw() -> void:
 		draw_line(point * inner_radius, point * outer_radius, line_color, line_width, true)
 
 func _process(_delta: float) -> void:
-	# get hovered ability by mouse position
+	# get hovered spell by mouse position
 	var mouse_pos: Vector2 = get_local_mouse_position()
 	var mouse_length: float = mouse_pos.length()
 	if mouse_length > inner_radius:
 		# multiply by -1 due to Godot's 2D coordinate system
 		var mouse_angle: float = fposmod(-1 * mouse_pos.angle(), TAU)
 		selected_spell = ceil((mouse_angle / TAU) * len(spells) - 1)
-	# if no ability is hovered, set selected_spell to value outside of range
+	# if no spell is hovered, set selected_spell to value outside of range
 	else:
 		selected_spell = -1
 	
-	# redraw circle every frame
-	queue_redraw()
+	# redraw circle every two frames
+	if Engine.get_process_frames() % 2 == 0:
+		queue_redraw()
 
 func open() -> void:
 	animation_player.play("open")
@@ -86,7 +87,7 @@ func open() -> void:
 func close() -> String:
 	animation_player.play("close")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	# return the selected ability if there is one
+	# return the selected spell if there is one
 	if selected_spell == -1:
 		return ""
 	else:

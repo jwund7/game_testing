@@ -6,7 +6,7 @@ var EXPLOSION: Spell = load("res://weapon/resources/explosion.tres")
 
 var damaged_enemies: Array[HitboxComponent]
 
-func _ready():
+func _ready() -> void:
 	# sets a short max existence timer
 	var death_timer: Timer = Timer.new()
 	death_timer.wait_time = 0.2

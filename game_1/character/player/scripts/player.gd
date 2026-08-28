@@ -154,6 +154,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
+	# use selected spell when left click occurs
 	if Input.is_action_just_pressed("left_click") and not spell_controller.select_open:
 		wand.use_spell(spell_controller.selected_spell)
 	

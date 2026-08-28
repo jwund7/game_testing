@@ -9,7 +9,7 @@ var BALL: Spell = load("res://weapon/resources/ball.tres")
 
 const SPEED: float = 10.0
 
-func _ready():
+func _ready() -> void:
 	animation_player.play("grow")
 	# sets a 2 second max existence timer
 	var death_timer: Timer = Timer.new()

@@ -76,8 +76,9 @@ func _process(_delta: float) -> void:
 	else:
 		selected_ability = -1
 	
-	# redraw circle every frame
-	queue_redraw()
+	# redraw circle every two frames
+	if Engine.get_process_frames() % 2 == 0:
+		queue_redraw()
 
 func open() -> void:
 	animation_player.play("open")
