@@ -5,7 +5,6 @@ class_name Player
 @onready var camera: Camera3D = $Head/PlayerCam
 @onready var ability_controller: Node = $AbilityController
 @onready var spell_controller: Node = $SpellController
-@onready var wand: Node3D = $Head/PlayerCam/Wand
 @onready var shape_cast: ShapeCast3D = $ShapeCast3D
 
 const SENS: float = 0.35
@@ -154,10 +153,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	# use selected spell when left click occurs
-	if Input.is_action_just_pressed("left_click") and not spell_controller.select_open:
-		wand.use_spell(spell_controller.selected_spell)
 	
 	# handle camera movement
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

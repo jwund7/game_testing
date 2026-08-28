@@ -98,21 +98,40 @@ script = ExtResource("7_4qt65")
 
 [node name="SpellMenu" parent="SpellController" instance=ExtResource("7_okfwm")]
 
-[node name="SpellIndicator" type="RichTextLabel" parent="SpellController"]
-custom_minimum_size = Vector2(300, 50)
+[node name="ProgressBar" type="ProgressBar" parent="SpellController"]
+custom_minimum_size = Vector2(50, 300)
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -320.0
-offset_top = -50.0
-offset_right = -20.0
+offset_top = -20.0
+offset_right = -270.0
+offset_bottom = 280.0
 grow_horizontal = 0
 grow_vertical = 0
+rotation = -1.5707964
+show_percentage = false
+
+[node name="SpellIndicator" type="RichTextLabel" parent="SpellController/ProgressBar"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -150.0
+offset_right = 325.0
+offset_bottom = -99.99997
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
