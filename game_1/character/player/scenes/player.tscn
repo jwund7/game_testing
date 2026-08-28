@@ -17,8 +17,8 @@ height = 1.8
 height = 1.8
 radius = 0.45
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_qjkh3"]
-height = 1.9
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ar58l"]
+height = 1.4
 radius = 0.45
 
 [node name="Player" type="CharacterBody3D"]
@@ -29,6 +29,7 @@ script = ExtResource("1_oul6g")
 mesh = SubResource("CapsuleMesh_kqu6x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("CylinderShape3D_oul6g")
 
 [node name="Crosshair" type="Sprite2D" parent="."]
@@ -50,7 +51,7 @@ collision_mask = 6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, -0.18, 0)
 
 [node name="Wand" parent="Head/PlayerCam" instance=ExtResource("6_tn8gd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25867885, -0.17082661, -0.3622897)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25085622, -0.17082661, -0.33616042)
 
 [node name="AbilityController" type="Node" parent="."]
 script = ExtResource("5_qjkh3")
@@ -113,11 +114,9 @@ mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
 horizontal_alignment = 2
 
-[node name="UncrouchCheck" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0)
-visible = false
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_ar58l")
+target_position = Vector3(0, 0, 0)
 collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="UncrouchCheck"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07393557, 0)
-shape = SubResource("CylinderShape3D_qjkh3")

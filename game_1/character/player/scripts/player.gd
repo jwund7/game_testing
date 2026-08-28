@@ -6,6 +6,7 @@ class_name Player
 @onready var ability_controller: Node = $AbilityController
 @onready var spell_controller: Node = $SpellController
 @onready var wand: Node3D = $Head/PlayerCam/Wand
+@onready var shape_cast: ShapeCast3D = $ShapeCast3D
 
 const SENS: float = 0.35
 

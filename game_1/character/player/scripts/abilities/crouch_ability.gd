@@ -40,21 +40,19 @@ func ability_process(delta: float) -> void:
 		crouch_progress += delta
 	elif crouch_progress >= 0.0 and not is_crouched:
 		crouch_progress -= delta
-	# cancel uncrouch if player collides with something
-	if player.is_on_ceiling() and crouch_progress > 0:
-		is_crouched = true
 	# linear interpolation of collision shape using crouch_time as weight
 	# (e.g. crouch_time = 0.0 -> fully at base_height)
 	collision.shape.height = lerp(base_height, crouch_height, crouch_progress)
 
-#func can_uncrouch() -> bool:
+func can_uncrouch() -> bool:
 	# check if any environment obstacles exist above player
-	# found a different solution since this sometimes randomly just doesn't work
-	# would work better than current solution if it could be implemented successfully
-	#print(uncrouch_check.get_overlapping_bodies())
-	#return len(uncrouch_check.get_overlapping_bodies()) <= 0
+	# something is wrong with csgbox collision so this does not work with those
+	player.shape_cast.force_shapecast_update()
+	print(player.shape_cast.get_collision_count())
+	return player.shape_cast.get_collision_count() <= 0
 
 func stop_crouch() -> void:
-	# uncrouch and start cooldown
-	is_crouched = false
-	crouch_cooldown = base_crouch_cooldown
+	if can_uncrouch():
+		# uncrouch and start cooldown
+		is_crouched = false
+		crouch_cooldown = base_crouch_cooldown

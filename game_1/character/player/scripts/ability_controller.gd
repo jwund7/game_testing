@@ -5,7 +5,6 @@ extends Node
 @onready var ability_menu: Control = $AbilityMenu
 # nodes required for crouch ability
 @onready var collision: CollisionShape3D = $"../CollisionShape3D"
-@onready var uncrouch_check: Area3D = $"../UncrouchCheck"
 # nodes required for dodge ability
 @onready var dodge_timer: Timer = $DodgeTime
 # nodes required for levitate ability
