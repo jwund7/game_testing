@@ -7,7 +7,6 @@
 points = PackedVector3Array(-10, -13, 0, 10, -13, 0, -10, 12.999998, 0, 10, 12.999998, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7e44"]
-cull_mode = 2
 albedo_texture = ExtResource("1_glonr")
 uv1_scale = Vector3(20, 26, 1)
 
@@ -54,6 +53,7 @@ mesh = SubResource("QuadMesh_n7e44")
 
 [node name="Cell" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -10)
+collision_layer = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cell"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 1.5, 0)

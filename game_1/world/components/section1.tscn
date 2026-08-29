@@ -1,0 +1,147 @@
+[gd_scene load_steps=6 format=3 uid="uid://ca28kbjq4rdt"]
+
+[ext_resource type="PackedScene" uid="uid://w3dp0w12q8cv" path="res://world/components/room.tscn" id="1_2876n"]
+[ext_resource type="PackedScene" uid="uid://xxo87chegtl" path="res://world/components/hallway.tscn" id="2_knqnb"]
+[ext_resource type="PackedScene" uid="uid://bkw4joaxspcnb" path="res://world/components/hallway_corner.tscn" id="3_p2hbh"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_knqnb"]
+size = Vector2(4, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p2hbh"]
+points = PackedVector3Array(2, 1.5, 0, 2, -1.5, 0, -2, 1.5, 0, -2, -1.5, 0)
+
+[node name="Section1" type="Node3D"]
+
+[node name="Room" parent="." instance=ExtResource("1_2876n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -16)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+mesh = SubResource("QuadMesh_knqnb")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Room"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+shape = SubResource("ConvexPolygonShape3D_p2hbh")
+
+[node name="Room2" parent="." instance=ExtResource("1_2876n")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20, 0, -4)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Room2"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+mesh = SubResource("QuadMesh_knqnb")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Room2"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+shape = SubResource("ConvexPolygonShape3D_p2hbh")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Room2"]
+transform = Transform3D(4.3711378e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, 4.3711378e-08, 4, 1.5, 0)
+mesh = SubResource("QuadMesh_knqnb")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Room2"]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 4, 1.5, 0)
+shape = SubResource("ConvexPolygonShape3D_p2hbh")
+
+[node name="Hallway" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -16)
+
+[node name="HallwayCorner" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 0, -16)
+
+[node name="Hallway2" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -16)
+
+[node name="Hallway3" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -16)
+
+[node name="HallwayCorner2" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -16)
+
+[node name="Hallway4" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -12)
+
+[node name="Hallway5" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -8)
+
+[node name="Hallway6" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, -12)
+
+[node name="Hallway7" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, -8)
+
+[node name="HallwayCorner3" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -4)
+
+[node name="HallwayCorner4" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 0, -4)
+
+[node name="Hallway8" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10, 0, -4)
+
+[node name="Hallway9" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 14, 0, -4)
+
+[node name="Hallway10" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14, 0, -4)
+
+[node name="Hallway11" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, -4)
+
+[node name="HallwayCorner5" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6, 0, -4)
+
+[node name="HallwayCorner6" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6, 0, -4)
+
+[node name="Hallway12" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, 2)
+
+[node name="Hallway13" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, 6)
+
+[node name="HallwayCorner7" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 20, 0, 10)
+
+[node name="Hallway14" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 0)
+
+[node name="Hallway15" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 4)
+
+[node name="Hallway16" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 8)
+
+[node name="Hallway17" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -1, 16, 0, 10)
+
+[node name="Hallway18" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -1, 12, 0, 10)
+
+[node name="HallwayCorner8" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 8, 0, 10)
+
+[node name="Hallway20" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 12)
+
+[node name="HallwayCorner9" parent="." instance=ExtResource("3_p2hbh")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -6, 0, 16)
+
+[node name="Hallway21" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2, 0, 16)
+
+[node name="Hallway22" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, 16)
+
+[node name="Room3" parent="." instance=ExtResource("1_2876n")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, 16)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Room3"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+mesh = SubResource("QuadMesh_knqnb")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Room3"]
+transform = Transform3D(-0.99999994, 0, 0, 0, 1, 0, 0, 0, -0.99999994, 0, 1.5, 4)
+shape = SubResource("ConvexPolygonShape3D_p2hbh")
+
+[node name="Hallway23" parent="." instance=ExtResource("2_knqnb")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 0, 22)

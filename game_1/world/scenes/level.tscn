@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvhwke0asdaek"]
+[gd_scene load_steps=8 format=3 uid="uid://bvhwke0asdaek"]
 
 [ext_resource type="PackedScene" uid="uid://n55da7hmn8ci" path="res://world/components/jail_cells.tscn" id="1_0u2o0"]
 [ext_resource type="PackedScene" uid="uid://xxo87chegtl" path="res://world/components/hallway.tscn" id="2_jjmkw"]
 [ext_resource type="PackedScene" uid="uid://bkw4joaxspcnb" path="res://world/components/hallway_corner.tscn" id="3_jjmkw"]
-[ext_resource type="PackedScene" uid="uid://w3dp0w12q8cv" path="res://world/components/room.tscn" id="4_s5sgh"]
+[ext_resource type="PackedScene" uid="uid://ca28kbjq4rdt" path="res://world/components/section1.tscn" id="4_4l3bu"]
+[ext_resource type="PackedScene" uid="uid://k5muud41l8jt" path="res://world/components/section2.tscn" id="5_gyw1u"]
 
 [sub_resource type="Environment" id="Environment_s5sgh"]
 ssao_enabled = true
@@ -56,5 +57,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 33)
 [node name="Hallway7" parent="." instance=ExtResource("2_jjmkw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 33)
 
-[node name="Room" parent="." instance=ExtResource("4_s5sgh")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37, 0, 33)
+[node name="Section1" parent="." instance=ExtResource("4_4l3bu")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -54, 0, 37)
+
+[node name="Section2" parent="." instance=ExtResource("5_gyw1u")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -84, 0, 45)
