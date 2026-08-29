@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://d2dwlhmuvxupo"]
+
+[ext_resource type="Script" uid="uid://cec3rrc328a3g" path="res://weapon/scripts/spell_base.gd" id="1_kkd4m"]
+[ext_resource type="PackedScene" uid="uid://bwcr08l0kvbah" path="res://weapon/scenes/ball.tscn" id="2_pd007"]
+
+[resource]
+script = ExtResource("1_kkd4m")
+name = "Ball"
+cooldown = 1.0
+damage = 10.0
+spell_scene = ExtResource("2_pd007")
+metadata/_custom_type_script = "uid://cec3rrc328a3g"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://vup1pjwsmug2"]
+
+[ext_resource type="Script" uid="uid://cec3rrc328a3g" path="res://weapon/scripts/spell_base.gd" id="1_hgfpy"]
+[ext_resource type="PackedScene" uid="uid://b7j823wi3ghlg" path="res://weapon/scenes/explosion.tscn" id="2_nts61"]
+
+[resource]
+script = ExtResource("1_hgfpy")
+name = "Explosion"
+cooldown = 2.0
+damage = 15.0
+spell_scene = ExtResource("2_nts61")
+metadata/_custom_type_script = "uid://cec3rrc328a3g"

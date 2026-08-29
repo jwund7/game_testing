@@ -1,12 +1,10 @@
 extends Node
 
 # general nodes required for ability function
-@onready var player: Player = $".."
 @onready var ability_indicator: RichTextLabel = $AbilityIndicator
 @onready var ability_menu: Control = $AbilityMenu
 # nodes required for crouch ability
 @onready var collision: CollisionShape3D = $"../CollisionShape3D"
-@onready var uncrouch_check: Area3D = $"../UncrouchCheck"
 # nodes required for dodge ability
 @onready var dodge_timer: Timer = $DodgeTime
 # nodes required for levitate ability
@@ -32,9 +30,15 @@ var select_open: bool = false
 var ability_timer: float = 0.0
 var selected_ability: String
 
+var player: Player = PlayerManager.player
+
 func _ready() -> void:
+	# wait until player exists and get the player
+	await get_parent().ready
+	player = PlayerManager.player
 	# start game using grapple ability
 	selected_ability = "grapple"
+	ability_indicator.text = selected_ability
 	# create ability class objects
 	crouch_ability = CrouchAbility.new(player, collision)
 	dodge_ability = DodgeAbility.new(player, dodge_timer)
@@ -42,8 +46,6 @@ func _ready() -> void:
 	grapple_ability = GrappleAbility.new(player, grapple_timeout, ray, rope, grapple_indicator)
 
 func _physics_process(delta: float) -> void:
-	# change ability indicator to current ability
-	ability_indicator.text = selected_ability
 	# ensure grapple is not visible when ability is not in use
 	if not selected_ability == "grapple":
 		grapple_indicator.visible = false
@@ -69,8 +71,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 	# handle selection wheel opening and closing
 	var crouch_check: bool = crouch_ability.crouch_progress > 0
 	var switch_restricted: bool = crouch_check or is_dodging or is_levitating or is_grappling
+	var spell_select: bool = player.spell_controller.select_open
 	# only allow wheel opening if no abilities are active
-	if Input.is_action_just_pressed("ui_focus_next") and not switch_restricted:
+	if Input.is_action_just_pressed("ui_focus_next") and not (switch_restricted or spell_select):
 		select_open = true
 		ability_menu.open()
 	if Input.is_action_just_released("ui_focus_next"):
@@ -83,6 +86,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 		# if no ability was selected with the wheel, revert to previously used ability
 		if selected_ability == "":
 			selected_ability = current_ability
+		# change ability indicator to current ability
+		ability_indicator.text = selected_ability
 	
 	# handle ability usage
 	if Input.is_action_just_pressed("movement_ability") and not select_open and ability_timer <= 0:

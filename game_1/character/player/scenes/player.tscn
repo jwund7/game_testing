@@ -1,0 +1,141 @@
+[gd_scene load_steps=12 format=3 uid="uid://bcqmasf81enlv"]
+
+[ext_resource type="Script" uid="uid://t6xy0lj4sayo" path="res://character/player/scripts/player.gd" id="1_oul6g"]
+[ext_resource type="PackedScene" uid="uid://ddeedb53jmql6" path="res://character/player/scenes/rope.tscn" id="2_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://bwlrjsq1vkxvy" path="res://assets/crosshair.png" id="4_yw30f"]
+[ext_resource type="Script" uid="uid://do4oi7r8ivh6a" path="res://character/player/scripts/ability_controller.gd" id="5_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://rgslug1vhh5w" path="res://character/player/scenes/ability_menu.tscn" id="6_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://cfd5h4t6evl8w" path="res://weapon/scenes/wand.tscn" id="6_tn8gd"]
+[ext_resource type="Script" uid="uid://bo1ibmcirmnte" path="res://character/player/scripts/spell_controller.gd" id="7_4qt65"]
+[ext_resource type="PackedScene" uid="uid://bgioghnq8mwwm" path="res://character/player/scenes/spell_menu.tscn" id="7_okfwm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
+height = 1.8
+radius = 0.45
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ar58l"]
+height = 1.4
+radius = 0.45
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 2
+script = ExtResource("1_oul6g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_kqu6x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("CylinderShape3D_oul6g")
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_yw30f")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365, 0)
+
+[node name="PlayerCam" type="Camera3D" parent="Head"]
+current = true
+
+[node name="GrappleRay" type="RayCast3D" parent="Head/PlayerCam"]
+target_position = Vector3(0, 0, -10)
+collision_mask = 6
+
+[node name="Rope" parent="Head/PlayerCam" instance=ExtResource("2_g1dw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, -0.18, 0)
+
+[node name="Wand" parent="Head/PlayerCam" instance=ExtResource("6_tn8gd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25085622, -0.17082661, -0.33616042)
+
+[node name="AbilityController" type="Node" parent="."]
+script = ExtResource("5_qjkh3")
+
+[node name="GrappleTimeout" type="Timer" parent="AbilityController"]
+wait_time = 1.5
+one_shot = true
+
+[node name="GrappleIndicator" type="RichTextLabel" parent="AbilityController"]
+visible = false
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+offset_left = 934.0
+offset_top = 554.0
+offset_right = 1034.0
+offset_bottom = 654.0
+rotation = -1.5707964
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "( )"
+
+[node name="DodgeTime" type="Timer" parent="AbilityController"]
+wait_time = 0.2
+
+[node name="LevitateTime" type="Timer" parent="AbilityController"]
+wait_time = 10.0
+
+[node name="AbilityMenu" parent="AbilityController" instance=ExtResource("6_g6k8r")]
+
+[node name="AbilityIndicator" type="RichTextLabel" parent="AbilityController"]
+custom_minimum_size = Vector2(300, 50)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = 310.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 32
+
+[node name="SpellController" type="Node" parent="."]
+script = ExtResource("7_4qt65")
+
+[node name="SpellMenu" parent="SpellController" instance=ExtResource("7_okfwm")]
+
+[node name="ProgressBar" type="ProgressBar" parent="SpellController"]
+custom_minimum_size = Vector2(50, 300)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -20.0
+offset_right = -270.0
+offset_bottom = 280.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -1.5707964
+show_percentage = false
+
+[node name="SpellIndicator" type="RichTextLabel" parent="SpellController/ProgressBar"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -150.0
+offset_right = 325.0
+offset_bottom = -99.99997
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 32
+horizontal_alignment = 1
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_ar58l")
+target_position = Vector3(0, 0, 0)
+collision_mask = 2

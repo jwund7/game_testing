@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfd5h4t6evl8w"]
+
+[ext_resource type="Script" uid="uid://chfdckbe8m0eo" path="res://weapon/scripts/wand.gd" id="1_wgmbq"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l5w5c"]
+top_radius = 0.005
+bottom_radius = 0.02
+height = 0.3
+
+[node name="Wand" type="Node3D"]
+script = ExtResource("1_wgmbq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_l5w5c")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.16255218)
+target_position = Vector3(0, 0, -1)

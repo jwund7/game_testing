@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://cr32g2h65r4pv"]
+
+[ext_resource type="Script" uid="uid://ifo0rardb5b6" path="res://character/enemy/scripts/enemy_1.gd" id="1_vttb0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wfgg3"]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wfgg3"]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vttb0"]
+albedo_color = Color(0.7543711, 0.3703839, 0.33306172, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_noih0"]
+material = SubResource("StandardMaterial3D_vttb0")
+radius = 0.06
+height = 0.16
+
+[node name="Enemy1" type="CharacterBody3D"]
+collision_layer = 16
+collision_mask = 27
+script = ExtResource("1_vttb0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_wfgg3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wfgg3")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.4
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.8150223, 0, 0.002449759, 1)
+debug_path_custom_point_size = 16.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.449, -0.3401922)
+mesh = SubResource("SphereMesh_noih0")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.449, -0.3401922)
+mesh = SubResource("SphereMesh_noih0")

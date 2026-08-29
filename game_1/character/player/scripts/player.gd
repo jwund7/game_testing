@@ -1,11 +1,11 @@
 extends CharacterBody3D
 class_name Player
 
-@export var weapon_cooldown: float = 0.5
-
 @onready var cam_mount: Node3D = $Head
 @onready var camera: Camera3D = $Head/PlayerCam
 @onready var ability_controller: Node = $AbilityController
+@onready var spell_controller: Node = $SpellController
+@onready var shape_cast: ShapeCast3D = $ShapeCast3D
 
 const SENS: float = 0.35
 
@@ -32,6 +32,7 @@ var levitate_speed: float = 2.5
 var levitate_accel: float = 2.5
 
 func _ready() -> void:
+	PlayerManager.player = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func get_move_speed() -> float:
@@ -109,6 +110,8 @@ func _levitate_physics(delta: float, direction: Vector3) -> void:
 		# clamp velocity to prevent going over max speed
 		self.velocity = self.velocity.clamp(-max_speed, max_speed)
 
+# this kinda sucks, try making a player state machine at some point
+# PLEASE GOD MAKE A STATE MACHINE
 func _physics_process(delta: float) -> void:
 	# movement
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
