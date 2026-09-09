@@ -1,7 +1,8 @@
 extends Enemy
-class_name Enemy1
+class_name Grunt
 
 @onready var navigator: NavigationAgent3D = $NavigationAgent3D
+@onready var view_ray: RayCast3D = $ViewRay
 
 var curse_mod: float = 1.0
 
@@ -10,6 +11,7 @@ func _ready() -> void:
 	CHASE_DISTANCE = 8.0
 	CHASE_SPEED = 3.0
 	WANDER_SPEED = 0.8
+	LOOK_ANGLE = PI / 3
 	max_health = 50.0
 	
 	# create new state machine (declared in Enemy class) and its states

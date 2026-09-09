@@ -16,5 +16,5 @@ script = ExtResource("1_m4l0d")
 [node name="Player" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_3lunb")
 
-[node name="Enemy1" type="CollisionShape3D" parent="."]
+[node name="Grunt" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_jpx7d")

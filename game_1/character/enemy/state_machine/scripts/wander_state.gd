@@ -1,7 +1,7 @@
 extends StateInterface
 class_name WanderState
 
-var character: CharacterBody3D
+var character: Enemy
 var wander_time: float
 var wander_target: Vector3
 var player: CharacterBody3D = PlayerManager.player
@@ -40,8 +40,26 @@ func physics_update(delta: float) -> void:
 	
 	# rotate the enemy in the direction they are moving
 	var look_direction: Vector3 = char_pos + direction
-	character.look_at(Vector3(look_direction[0], 0.8, look_direction[2]))
+	character.look_at(Vector3(look_direction.x, 0.0, look_direction.z))
+	# prevent enemy from looking at the ground
+	character.rotation.x = 0.0
 	
-	# if player is in range, move to chase state
-	if char_pos.distance_to(player.global_position) < character.CHASE_DISTANCE:
-		state_machine.change_state("chase")
+	# get the player's position
+	var player_pos: Vector3 = player.global_position
+	# if player is in range, check other requirements
+	if char_pos.distance_to(player_pos) < character.CHASE_DISTANCE:
+		# get 2d normalized vectors for look direction and enemy to player
+		var look_v2: Vector2 = Vector2(direction.x, direction.z).normalized()
+		var player_vec: Vector3 = player_pos - char_pos
+		var player_v2: Vector2 = Vector2(player_vec.x, player_vec.z).normalized()
+		
+		# get the character's raycast
+		var ray: RayCast3D = character.view_ray
+		ray.target_position = player_pos
+		ray.force_raycast_update()
+		# if the closest detected object is the player, no walls exist between them
+		var no_walls: bool = ray.is_colliding() and ray.get_collider() is Player
+		
+		# if player is within vision angle and not behind walls, move to chase state
+		if abs(look_v2.angle_to(player_v2)) < character.LOOK_ANGLE and no_walls:
+			state_machine.change_state("chase")

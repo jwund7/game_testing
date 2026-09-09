@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cr32g2h65r4pv"]
 
-[ext_resource type="Script" uid="uid://ifo0rardb5b6" path="res://character/enemy/scripts/enemy_1.gd" id="1_vttb0"]
+[ext_resource type="Script" uid="uid://ifo0rardb5b6" path="res://character/enemy/scripts/grunt.gd" id="1_vttb0"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wfgg3"]
 radius = 0.4
@@ -18,12 +18,12 @@ material = SubResource("StandardMaterial3D_vttb0")
 radius = 0.06
 height = 0.16
 
-[node name="Enemy1" type="CharacterBody3D"]
+[node name="Grunt" type="CharacterBody3D"]
 collision_layer = 16
 collision_mask = 27
 script = ExtResource("1_vttb0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_wfgg3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -43,3 +43,9 @@ mesh = SubResource("SphereMesh_noih0")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.449, -0.3401922)
 mesh = SubResource("SphereMesh_noih0")
+
+[node name="ViewRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+target_position = Vector3(0, 0, -8)
+debug_shape_custom_color = Color(0.8757374, 0.1334553, 5.7756904e-07, 1)
+debug_shape_thickness = 5

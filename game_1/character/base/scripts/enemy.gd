@@ -5,6 +5,7 @@ class_name Enemy
 var CHASE_DISTANCE: float
 var CHASE_SPEED: float
 var WANDER_SPEED: float
+var LOOK_ANGLE: float
 var state_machine: StateMachine
 
 @abstract

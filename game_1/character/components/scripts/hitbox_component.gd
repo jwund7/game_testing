@@ -6,10 +6,11 @@ var character: CharacterBody3D
 func setup(parent: CharacterBody3D) -> void:
 	# set character to the initializing CharacterBody
 	character = parent
+	# get the parent's class name
+	var char_type: String = character.get_script().get_global_name()
 	# remove collision objects that are not the parent's
 	for collider: CollisionShape3D in get_children():
-		# get the parent's class name
-		if character.get_script().get_global_name() != collider.name:
+		if char_type != collider.name:
 			collider.queue_free()
 	# binary values for the collision layer and mask
 	# layer 1 is bit 0, layer 2 is bit 1, etc
