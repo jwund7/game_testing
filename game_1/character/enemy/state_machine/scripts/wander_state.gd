@@ -46,6 +46,7 @@ func physics_update(delta: float) -> void:
 	
 	# get the player's position
 	var player_pos: Vector3 = player.global_position
+	
 	# if player is in range, check other requirements
 	if char_pos.distance_to(player_pos) < character.CHASE_DISTANCE:
 		# get 2d normalized vectors for look direction and enemy to player
@@ -55,7 +56,8 @@ func physics_update(delta: float) -> void:
 		
 		# get the character's raycast
 		var ray: RayCast3D = character.view_ray
-		ray.target_position = player_pos
+		ray.target_position = player_pos - char_pos
+		ray.rotation.y = -1 * character.rotation.y
 		ray.force_raycast_update()
 		# if the closest detected object is the player, no walls exist between them
 		var no_walls: bool = ray.is_colliding() and ray.get_collider() is Player

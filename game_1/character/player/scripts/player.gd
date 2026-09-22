@@ -31,6 +31,9 @@ var crouch_speed: float = 2.5
 var levitate_speed: float = 2.5
 var levitate_accel: float = 2.5
 
+# stealth variables
+var visibility: float = 1.0
+
 func _ready() -> void:
 	PlayerManager.player = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

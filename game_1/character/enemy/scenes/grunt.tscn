@@ -46,6 +46,8 @@ mesh = SubResource("SphereMesh_noih0")
 
 [node name="ViewRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+enabled = false
 target_position = Vector3(0, 0, -8)
+collision_mask = 3
 debug_shape_custom_color = Color(0.8757374, 0.1334553, 5.7756904e-07, 1)
 debug_shape_thickness = 5
