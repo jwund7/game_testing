@@ -25,7 +25,6 @@ func _physics_process(delta: float) -> void:
 	ray.force_raycast_update()
 	# deletes projectile if it collides with a wall
 	if ray.is_colliding() and ray.get_collider() is StaticBody3D:
-		print("DELETE")
 		queue_free()
 
 func _on_hitbox_area_entered(area: Area3D) -> void:

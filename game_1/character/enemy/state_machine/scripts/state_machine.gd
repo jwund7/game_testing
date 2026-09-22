@@ -6,10 +6,10 @@ var current_state: StateInterface
 var current_state_name: String
 var owner
 
-func add_state(name: String, state:StateInterface) -> void:
+func add_state(name: String, state: StateInterface) -> void:
 	states[name] = state
 	state.state_machine = self
-	
+
 func set_initial_state(state_name: String) -> void:
 	change_state(state_name)
 
