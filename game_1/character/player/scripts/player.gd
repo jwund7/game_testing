@@ -6,10 +6,12 @@ class_name Player
 @onready var ability_controller: Node = $AbilityController
 @onready var spell_controller: Node = $SpellController
 @onready var shape_cast: ShapeCast3D = $ShapeCast3D
+@onready var state_indicator: RichTextLabel = $StateIndicator
 
 const SENS: float = 0.35
 
 # ground movement variables
+var direction: Vector3
 var walk_speed: float = 3.5
 var sprint_speed: float = 4.5
 var ground_accel: float = 14.0
@@ -26,17 +28,28 @@ var jump_force: float = 4.2
 var jump_buffer: bool = false
 var jump_buffer_time: float = 0.1
 
-# ability movement variables
-var crouch_speed: float = 2.5
+# ability variables
+var crouch_speed: float = 2.0
 var levitate_speed: float = 2.5
 var levitate_accel: float = 2.5
+var selected_ability: String
+var ability_active: bool = false
 
 # stealth variables
 var visibility: float = 1.0
 
+var state_machine: StateMachine
+
 func _ready() -> void:
 	PlayerManager.player = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	state_machine = StateMachine.new()
+	state_machine.owner = self
+	state_machine.add_state("ground", GroundState.new())
+	state_machine.add_state("air", AirState.new())
+	state_machine.add_state("ability", AbilityState.new())
+	state_machine.set_initial_state("ground")
 
 func get_move_speed() -> float:
 	# prevent sprinting and return unique speed if player is using crouch or levitate ability
@@ -59,92 +72,21 @@ func on_jump_buffer_timeout() -> void:
 	# if timer runs out, remove jump buffer grace period
 	jump_buffer = false
 
-# ground movement
-func _ground_physics(delta: float, direction: Vector3) -> void:
-	# get dot product of velocity and "intended" movement direction
-	var speed_in_dir: float = self.velocity.dot(direction)
-	# determine how much speed should be added in the current direction
-	var add_speed: float = get_move_speed() - speed_in_dir
-	if add_speed > 0:
-		var accel_speed: float = ground_accel * get_move_speed() * delta
-		# ensure velocity is not increased beyond speed cap
-		accel_speed = min(accel_speed, add_speed)
-		self.velocity += accel_speed * direction
-	
-	# friction
-	# get velocity drop based on friction strength
-	var drop: float = max(self.velocity.length(), ground_decel) * ground_friction * delta
-	# ensure new speed value is greather than 0
-	var new_speed: float = max(self.velocity.length() - drop, 0.0)
-	if self.velocity.length() > 0:
-		# create a ratio for speed decrease ((abs_velocity - drop) / abs_velocity)
-		new_speed /= self.velocity.length()
-	# multiply velocity by speed ratio
-	self.velocity *= new_speed
-
-# air movement
-func _air_physics(delta: float, direction: Vector3) -> void:
-	# change y velocity (gravity)
-	velocity.y -= 9.0 * delta
-	# get dot product of velocity and "intended" movement direction
-	var speed_in_dir: float = self.velocity.dot(direction)
-	# cap how much speed is gained
-	var speed_cap: float = min((air_move_speed * direction).length(), air_speed_cap)
-	# determine how much speed should be added in the current direction
-	var add_speed: float = speed_cap - speed_in_dir
-	if add_speed > 0:
-		var accel_speed: float = air_accel * air_move_speed * delta
-		# ensure velocity is not increased beyond speed cap
-		accel_speed = min(accel_speed, add_speed)
-		# only apply air physics if a grapple is not in progress
-		if not ability_controller.is_grappling:
-			self.velocity += accel_speed * direction
-
-func _levitate_physics(delta: float, direction: Vector3) -> void:
-	# get the max speed as a vector
-	var max_speed: Vector3 = Vector3(get_move_speed(), 100.0, get_move_speed())
-	# add velocity based on direction
-	self.velocity += levitate_accel * direction * delta
-	# prevent velocity changes while grappling
-	if not ability_controller.is_grappling:
-		# slow down while no movement is occurring
-		if direction.length() == 0.0:
-			self.velocity -= self.velocity * delta
-		# clamp velocity to prevent going over max speed
-		self.velocity = self.velocity.clamp(-max_speed, max_speed)
-
-# this kinda sucks, try making a player state machine at some point
-# PLEASE GOD MAKE A STATE MACHINE
 func _physics_process(delta: float) -> void:
+	selected_ability = ability_controller.selected_ability
+	ability_active = ability_controller.using_ability
+	state_indicator.text = "State: " + state_machine.current_state_name
 	# movement
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
-	var direction := (cam_mount.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	# avoid using other physics while levitating
-	if not ability_controller.is_levitating:
-		# pause normal physics while dodge is occurring
-		if not ability_controller.is_dodging:
-			if is_on_floor():
-				# always run ground physics if on floor
-				_ground_physics(delta, direction)
-				# if there is a jump buffered, jump
-				if jump_buffer == true:
-					jump()
-			else:
-				# always run air physics if not on floor
-				_air_physics(delta, direction)
-	else:
-		# use levitate physics while levitating
-		_levitate_physics(delta, direction)
+	direction = (cam_mount.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	# use state machine physics process
+	state_machine.physics_update(delta)
 	
 	# jumping
 	if Input.is_action_just_pressed("jump"):
-		# if on floor, jump
-		if is_on_floor():
-			jump()
 		# if not on floor and jump pressed, create a jump buffer timer
-		else:
-			jump_buffer = true
-			get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
+		jump_buffer = true
+		get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
 	
 	# move player
 	move_and_slide()

@@ -20,6 +20,7 @@ extends Node
 @export var is_dodging: bool = false
 @export var is_levitating: bool = false
 @export var is_grappling: bool = false
+@export var using_ability: bool = false
 var crouch_ability: CrouchAbility
 var dodge_ability: DodgeAbility
 var levitate_ability: LevitateAbility
@@ -38,7 +39,7 @@ func _ready() -> void:
 	player = PlayerManager.player
 	# start game using grapple ability
 	selected_ability = "grapple"
-	ability_indicator.text = selected_ability
+	ability_indicator.text = "Ability: " + selected_ability
 	# create ability class objects
 	crouch_ability = CrouchAbility.new(player, collision)
 	dodge_ability = DodgeAbility.new(player, dodge_timer)
@@ -46,6 +47,8 @@ func _ready() -> void:
 	grapple_ability = GrappleAbility.new(player, grapple_timeout, ray, rope, grapple_indicator)
 
 func _physics_process(delta: float) -> void:
+	var crouch_check: bool = crouch_ability.crouch_progress > 0
+	using_ability = crouch_check or is_dodging or is_levitating or is_grappling
 	# ensure grapple is not visible when ability is not in use
 	if not selected_ability == "grapple":
 		grapple_indicator.visible = false
@@ -87,7 +90,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if selected_ability == "":
 			selected_ability = current_ability
 		# change ability indicator to current ability
-		ability_indicator.text = selected_ability
+		ability_indicator.text = "Ability: " + selected_ability
 	
 	# handle ability usage
 	if Input.is_action_just_pressed("movement_ability") and not select_open and ability_timer <= 0:

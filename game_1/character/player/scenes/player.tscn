@@ -139,3 +139,16 @@ enabled = false
 shape = SubResource("CylinderShape3D_ar58l")
 target_position = Vector3(0, 0, 0)
 collision_mask = 2
+
+[node name="StateIndicator" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(300, 50)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -100.0
+offset_right = 310.0
+offset_bottom = -50.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 32

@@ -92,7 +92,6 @@ func physics_update(delta: float) -> void:
 	# otherwise, subtract from meter
 	elif detection > 0.0:
 		detection -= 0.5
-	print(detection)
 	# if the designated max detection has been reached, move to chase state
 	if detection >= max_detection:
 		state_machine.change_state("chase")
